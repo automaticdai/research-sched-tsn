@@ -43,6 +43,11 @@ plotObjFcn = 1;                         % set to zero if you do not need a final
 objfcn =  @(x)(x(:,1) - 20).^2 + (x(:,2) - 25).^2;
 tic;
 
+
+
+
+
+
 %% The main loop of PSO
 for iter = 1:maxIter
     swarm(:, 1, 1) = swarm(:, 1, 1) + swarm(:, 2, 1)/1.3;       %update x position with the velocity

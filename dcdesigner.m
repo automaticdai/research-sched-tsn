@@ -1,34 +1,31 @@
 % Digital Control Designer
-clc
-clear all
-close all
+function tss = dcdesigner(poles)
 
-%%
-% System Model
+%% Desired pole
+% [0 - 1]
+%poles = [-2+3.1622i   -2-3.1622i];
+
+
+%% System Model
 num = 1;
 den = [1 0.05 10];
-Ts = 0.1;
+%Ts = 0.1;
 
-sys_tf = tf(num,den);
-
+%sys_tf = tf(num,den);
 %figure(1)
 %step(sys)
 %grid on
-%legend('pendulun')
 %hold off
 
+disp('Open Loop:')
 roots(den)
 
 
-%%
+%% Pole placement design
 % State State Model
 [A,B,C,D] = tf2ss(num,den);
-sys_ss = ss(A,B,C,D);
-sys_ss_d = c2d(sys_ss, Ts, 'zoh');
-
-% Desired pole
-% [0 - 1]
-poles = [-2+3.1622i   -2-3.1622i];
+%sys_ss = ss(A,B,C,D);
+%sys_ss_d = c2d(sys_ss, Ts, 'zoh');
 
 % pole placement
 K = place(A, B, poles);
@@ -42,10 +39,16 @@ D_dot = D;
 sys_cl = ss(A_dot, B_dot, C_dot, D_dot);
 
 % Eigen value of A
-eig(A - B * K)
+disp('Closed Loop:')
+eig(A_dot)
 
 [Time, Data] = step(sys_cl);
 
-pi = stepinfo(Data(:), Time(:), 'SettlingTimeThreshold',0.02);
+step(sys_cl)
 
-Settling_Time = pi.SettlingTime
+pi = stepinfo(sys_cl, 'SettlingTimeThreshold', 0.05);
+
+% Settling_Time
+tss = pi.SettlingTime;
+
+end
