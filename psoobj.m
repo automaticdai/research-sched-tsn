@@ -1,3 +1,4 @@
+% Objective function for PSO
 function tss_arr = psoobj(xy)
     m_size = size(xy);
     tss_arr = zeros(m_size(1),1);

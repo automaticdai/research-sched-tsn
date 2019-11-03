@@ -10,7 +10,7 @@
 % Xiaotian Dai
 % credit to: REZA AHMADZADEH  (based on the original code by Wesam Elshamy)
 % -----------------------------------
-clc;clear all;close all;
+clc; clear; close all;
 
 %% initialization
 %
