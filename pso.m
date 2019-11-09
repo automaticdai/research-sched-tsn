@@ -37,7 +37,7 @@ for iter = 1:maxIter
     swarm(:, 1, 2) = swarm(:, 1, 2) + swarm(:, 2, 2)/1.3;       %update y position with the velocity
     x = swarm(:, 1, 1);                                         % get the updated position
     y = swarm(:, 1, 2);                                         % updated position
-    fval = psoobj([x y]);                                  % evaluate the function using the position of the particle
+    fval = pso_obj_func([x y]);                                 % evaluate the function using the position of the particle
     
     % compare the function values to find the best ones
     for ii = 1:swarm_size
