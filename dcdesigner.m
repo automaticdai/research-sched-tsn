@@ -42,7 +42,7 @@ sys_cl = ss(A_dot, B_dot, C_dot, D_dot);
 disp('Closed Loop:')
 eig(A_dot)
 
-[Time, Data] = step(sys_cl);
+[time, data] = step(sys_cl);
 
 step(sys_cl)
 

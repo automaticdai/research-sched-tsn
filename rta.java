@@ -3,7 +3,7 @@ package analysis;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class RTA_TSN {
+public class rta {
 
 	int M = 1500;
 
