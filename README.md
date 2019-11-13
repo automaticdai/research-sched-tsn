@@ -1,2 +1,2 @@
 # research-sched-tsn
-Scheduling of Time Sensitive Networking
+Network Scheduling for IEEE Time-Sensitive Networking
