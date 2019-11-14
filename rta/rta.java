@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class rta {
 
-	int M = 1500;
+	int M = 1200;
 
 	/**
 	 * Assumptions: implicit deadlines for all packets;

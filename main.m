@@ -1,22 +1,29 @@
 % [C_i, T_i, D_i, P_i, J_i]
 % read a taskset
-taskset_arr = [1 2 3 3 1; 1 5 5 2 1; 1 12 12 3 1; 1 17 17 4 1];
+h = analysis.rta;
 
-taskset_arr
+taskset_arr = [1 2 3 1 0; 2 2 3 2 0];
 
 % run GA
 
-% check schedulability
-h = analysis.rta;
-
-ret = h.schedulabilityTest([1 2 3 1 0; 2 2 3 2 0]);
-
-disp(ret)
+    % check schedulability
+    bSched = h.schedulabilityTest(taskset_arr);
+    disp(bSched)
+    
+    % run PSO
+    % generate population
+    % check input constraint
+    % update the speed
+    
 %bSched = h.schedulabilityTest(taskset);
 
+%%
+[t,x,u] = ltisim_d([0 10], [0.5 0.2], 0.3, [0.25;0.4], 100, 0.01);
+
 % plot results
+subplot(2,1,1);
+plot(t, x);
+subplot(2,1,2);
+plot(t, u);
 
-
-% save results 
-
-% 
+% save results
