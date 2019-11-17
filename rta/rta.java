@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class rta {
 
-	int M = 1200;
+	int M = 12;
 
 	/**
 	 * Assumptions: implicit deadlines for all packets;
@@ -38,7 +38,7 @@ public class rta {
 	 * packets.
 	 * 
 	 * @param packets
-	 *            parameters: [C_i, T_i, D_i£¬ P_i]
+	 *            parameters: [C_i, T_i, D_i, P_i]
 	 * @return response time of each packet
 	 */
 	public long[] ResponseTimeAnalysis(int[][] packets) {
