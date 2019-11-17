@@ -2,30 +2,36 @@ clear; clc;
 
 
 %% Define Parameters
-% taskset
-% [C_i, T_i, D_i, P_i, J_i]
-taskset_arr = [1 2 3 1 0; 2 2 3 2 0];
-
 % control system
-x0 = [0; 10; 0];
-A = [0    -0.15   0;
-     0.23  0     -0.28;
-     0     0     -0.25];
-B = [0.15;0.15;0.5];
-C = [1 0 0];
+x0 = [10; 0];
+
+A = [-10     1;
+     -0.02  -2];
+B = [0; 2];
+C = [1 0];
 D = [0];
-K = [0.25 0.21 0.01];
+p = ss(A,B,C,D);
+
+K = [0.25 0.21];
 Ns = 1000;
-dt = 0.1;
-Ts = 0.1;
+dt = 0.001;
+Ts = 0.001;
 
 Acl = A + B * K;
+pcl = ss(Acl,B,C,D);
 
+
+%% check closed-loop stability
 eig(Acl)
+if (max(abs(eig(Acl))) >= 1)
+    disp("Unstable system!")
+end
 
+
+%% Run LTI simulation
 [t, x, u] = ltisim(x0, A, B, K, Ns, dt);
 
-% p = ss(A,B,C,D);
+
 % pd = c2d(p, Ts);
 %
 % Ad = pd.A;
@@ -34,7 +40,7 @@ eig(Acl)
 % Dd = pd.D;
 
 
-
+%%
 % plot states
 subplot(2,1,1);
 for i = 1:size(x,2)
@@ -56,44 +62,8 @@ xlabel("t")
 
 
 
-%% Test Schedulability
-% run GA
-
-% check schedulability
-% bSched = h.schedulabilityTest(taskset_arr);
-% disp(bSched);
-
-% run PSO
-% generate population
-% check input constraint
-% update the particle speed
 
 
-% h = analysis.rta;
-% bSched = h.schedulabilityTest(taskset);
-
-
-%% Run LTI simulation
-
-
-if (max(abs(eig(Acl))) >= 1)
-    disp("Unstable system!")
-end
-
-[t,x,u] = ltisim_d(x0, Ad, Bd, K, Ns, Ts);
-
-
-%% plot results
-subplot(2,1,1);
-for i = 1:size(x0,1)
-    stairs(t, x(:,i));
-    hold on;
-end
-ylabel("States: x_k")
-
-subplot(2,1,2);
-stairs(t, u);
-ylabel("Intpus: u_k")
 
 
 %% Save results
