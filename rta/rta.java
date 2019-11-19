@@ -1,3 +1,11 @@
+/**
+ * 
+ */
+/**
+ * @author Shuai Zhao
+ *
+ */
+
 package analysis;
 
 import java.util.ArrayList;
@@ -34,8 +42,8 @@ public class rta {
 	}
 
 	/**
-	 * Assumptions: implicit deadlines for all packets;
-	 * packets.
+	 * Assumptions: constrained deadlines for all packets;
+	 * packets. Implicit deadlines for control packets;
 	 * 
 	 * @param packets
 	 *            parameters: [C_i, T_i, D_i, P_i]
