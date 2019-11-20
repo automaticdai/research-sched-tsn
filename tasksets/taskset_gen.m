@@ -19,8 +19,9 @@ Ui = Ui';
 %Ti = 10 .^ (LA + (LB-LA) * rand(1, N));
 %Ti = round(Ti');
 
-T_list = [1,2,5,10,20,50,100,200,500,1000,2000,5000,10000] * 100;
-idx = floor(rand(N,1) * 10 + 1);
+T_list = [5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000] * 100;
+
+idx = floor(rand(N,1) * numel(T_list) + 1);
 Ti = T_list(idx)';
 
 

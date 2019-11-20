@@ -2,7 +2,7 @@ format long g
 
 % Parameters
 N = 20;                        % number of tasks
-U_bar = 0.8;                   % desired utilization
+U_bar = 0.95;                  % desired utilization
 
 taskset = taskset_gen(N, U_bar);
 
