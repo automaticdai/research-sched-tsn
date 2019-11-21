@@ -2,11 +2,12 @@
 
 clear; clc;
 
-addpath('.\tasksets')
-addpath('.\plants')
-addpath('.\data')
+addpath('tasksets')
+addpath('plants')
+addpath('data')
+addpath('rta')
 
-javaaddpath('.\rta\');
+javaaddpath(strcat(pwd(),'\rta\rta.jar'));
 rta = analysis.RTA;
 
 %% Define Parameters
