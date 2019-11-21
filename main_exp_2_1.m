@@ -1,16 +1,21 @@
 clear; clc;
 
-
 %% Define Parameters
+% scheduling system
+N = 10;         % number of packets
+U_bar = 0.2;    % desired utilization
+
+%taskset = taskset_gen(N, U_bar);
+%bSched = rta.schedulabilityTest(taskset);
+
 % control system
 x0 = [10; 0];
 
-A = [-10     1;
-     -0.02  -2];
-B = [0; 2];
-C = [1 0];
-D = [0];
-p = ss(A,B,C,D);
+p = dc_motor(0.01,0.1,0.01,1,0.5);
+A = p.A;
+B = p.B;
+C = p.C;
+D = p.D;
 
 K = [0.25 0.21];
 Ns = 1000;
@@ -58,11 +63,6 @@ for i = 1:size(u,2)
 end
 ylabel("Intpus: u_k")
 xlabel("t")
-
-
-
-
-
 
 
 
