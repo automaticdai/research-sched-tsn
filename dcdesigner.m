@@ -1,53 +1,77 @@
 % Digital Control Designer
-function tss = dcdesigner(poles)
+function tss = dcdesigner(p, poles)
+% Inputs:
+% P is in continous-time state-space
+% (Discrete time) Poles in the form of [-0.2+0.1622i   -0.2+0.1622i]
 
-%% Desired pole
-% [0 - 1]
-%poles = [-2+3.1622i   -2-3.1622i];
+%% Parameters
+b_plot = false;
 
-%% System Model
-num = 1;
-den = [1 0.05 10];
-%Ts = 0.1;
+global Ts
+global U_MAX
 
-%sys_tf = tf(num,den);
-%figure(1)
-%step(sys)
-%grid on
-%hold off
-
-disp('Open Loop:')
-roots(den)
+% LTI simulator parameters
+x0 = [1; 0];
+Ns = 3000;
+dt = 0.001;
 
 
-%% Pole placement design
-% State State Model
-[A,B,C,D] = tf2ss(num,den);
-%sys_ss = ss(A,B,C,D);
-%sys_ss_d = c2d(sys_ss, Ts, 'zoh');
-
-% pole placement
+%% Pole placement design (to solve K)
+% control system (continous)
+A = p.A; B = p.B; C = p.C; D = p.D;
 K = place(A, B, poles);
 
-% closed-loop
-A_dot = A - B * K;
-B_dot = B;
-C_dot = C;
-D_dot = D;
 
-sys_cl = ss(A_dot, B_dot, C_dot, D_dot);
+% control system (discrete)
+pd = c2d(p, Ts, 'tustin');
+Ad = pd.A; Bd = pd.B; Cd = pd.C; Dd = pd.D;
 
-% Eigen value of A
-disp('Closed Loop:')
-eig(A_dot)
+poles_d = exp(poles.*Ts); % poles in z-domain
+Kd = place(Ad, Bd, poles_d);
 
-[time, data] = step(sys_cl);
+Acl = Ad - Bd * Kd;
 
-step(sys_cl)
+% check closed-loop stability
+Acl_eig = eig(Acl);
 
-pi = stepinfo(sys_cl, 'SettlingTimeThreshold', 0.05);
+if (norm(Acl_eig(1),2) >= 1)
+    disp("[Error] Unstable system!")
+else
+    disp("System is stable.")
+end
+
+
+%% Run LTI simulation
+[t, x, u] = ltisim(x0, A, B, Kd, Ns, dt, Ts);
+
+
+%% Plot results
+if b_plot
+    % plot states
+    subplot(2,1,1);
+    for i = 1:size(x,2)
+        stairs(t, x(:,i));
+        hold on;
+    end
+    ylabel("States: x_k")
+    xlabel("t")
+
+    % plot inputs
+    subplot(2,1,2);
+    for i = 1:size(u,2)
+        stairs(t, u(:,i));
+        hold on;
+    end
+    ylabel("Intpus: u_k")
+    xlabel("t")
+end
 
 % Settling_Time
-tss = pi.SettlingTime;
+pi = stepinfo(x(:,1), t, 'SettlingTimeThreshold',0.05);
+tss = pi.SettlingTime
+
+if (tss > 2.98 && max(abs(u)) > U_MAX)
+    tss = 100;
+end
 
 end
