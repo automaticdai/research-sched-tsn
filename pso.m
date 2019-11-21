@@ -29,7 +29,6 @@ swarm(:,4,1) = 1000;                    % set the best value so far
 plotObjFcn = 1;                         % set to zero if you do not need a final plot
 
 %% The main loop of PSO
-
 tic;
 
 for iter = 1:maxIter
@@ -62,6 +61,7 @@ for iter = 1:maxIter
     pause(.1);                                                 % un-comment this line to decrease the animation speed
     disp(['iteration: ' num2str(iter)]);
 end
+
 toc
 
 %% plot the function
