@@ -6,6 +6,8 @@ n_P_DM = 0;     % number of schedulable packet sets
 n_Q_DM = 0;
 n_Q_RND = 0;
 
+rta = analysis.RTA;
+
 n = 0;
 while (n < n_All)
     disp(n)
