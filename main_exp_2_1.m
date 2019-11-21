@@ -30,7 +30,6 @@ candidate_solutions = zeros(search_numel,search_numel,search_numel);
 
 for i = 1:search_numel
     for j = 1:search_numel
-        disp("Progress:" + (i * 100 + j) / (search_numel^2) * 100 + "%")
         for k = 1:search_numel
             % add control packets 
             Ti = search_space(i);
@@ -57,6 +56,7 @@ for i = 1:search_numel
                 candidate_solutions(i,j,k) = 1;
             end
         end
+        disp("Progress:" + ((i - 1) * 100 + j) / (search_numel^2) * 100 + "%")
     end
 end
 
