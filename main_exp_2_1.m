@@ -29,8 +29,8 @@ taskset_nc = taskset_gen(N, U_bar);
 candidate_solutions = zeros(search_numel,search_numel,search_numel);
 
 for i = 1:search_numel
-    disp("Progress:" + i / search_numel * 100 + "%")
     for j = 1:search_numel
+        disp("Progress:" + (i * 100 + j) / (search_numel^2) * 100 + "%")
         for k = 1:search_numel
             % add control packets 
             Ti = search_space(i);
