@@ -1,5 +1,5 @@
 % Digital Control Designer
-function tss = dcdesigner(p, poles)
+function tss = dcdesigner(poles)
 % Inputs:
 % P is in continous-time state-space
 % (Discrete time) Poles in the form of [-0.2+0.1622i   -0.2+0.1622i]
@@ -9,6 +9,7 @@ b_plot = false;
 
 global Ts
 global U_MAX
+global p
 
 % LTI simulator parameters
 x0 = [1; 0];
@@ -34,11 +35,11 @@ Acl = Ad - Bd * Kd;
 % check closed-loop stability
 Acl_eig = eig(Acl);
 
-if (norm(Acl_eig(1),2) >= 1)
-    disp("[Error] Unstable system!")
-else
-    disp("System is stable.")
-end
+% if (norm(Acl_eig(1),2) >= 1)
+%     disp("[Error] Unstable system!")
+% else
+%     disp("System is stable.")
+% end
 
 
 %% Run LTI simulation
@@ -68,7 +69,7 @@ end
 
 % Settling_Time
 pi = stepinfo(x(:,1), t, 'SettlingTimeThreshold',0.05);
-tss = pi.SettlingTime
+tss = pi.SettlingTime;
 
 if (tss > 2.98 && max(abs(u)) > U_MAX)
     tss = 100;
