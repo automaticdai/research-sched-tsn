@@ -13,7 +13,7 @@ rta = analysis.RTA;
 %% Define Parameters
 % scheduling system
 N = 10;         % number of packets
-U_bar = 0.5;    % desired utilization
+U_bar = 0.9;    % desired utilization
 
 N_c = 3;        % number of control packets
 
@@ -26,7 +26,7 @@ search_numel = numel(search_space);
 %% this is one experiment
 % generate a taskset
 taskset_nc = taskset_gen(N, U_bar);
-candidate_solution_space = [];
+candidate_solutions = zeros(search_numel,search_numel,search_numel);
 
 for i = 1:search_numel
     disp("Progress:" + i / search_numel * 100 + "%")
@@ -46,7 +46,7 @@ for i = 1:search_numel
 
             % reorder priorities by deadlines
             taskset = sortrows(taskset, 3, 'ascend');
-            Pi = (N-1+N_c:-1:0)';
+            Pi = ((N-1+N_c):-1:0)';
             taskset(:,4) = Pi;
 
             % test schedulability
@@ -54,7 +54,7 @@ for i = 1:search_numel
 
             % if scheduable, add as a candidate solution
             if bSched
-                candidate_solution_space = [candidate_solution_space; Ti, Tj, Tk];
+                candidate_solutions(i,j,k) = 1;
             end
         end
     end
