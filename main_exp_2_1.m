@@ -56,7 +56,7 @@ for i = 1:search_numel
                 candidate_solutions(i,j,k) = 1;
             end
         end
-        disp("Progress:" + ((i - 1) * 100 + j) / (search_numel^2) * 100 + "%")
+        disp("Progress:" + ((i - 1) * search_numel + j) / (search_numel^2) * 100 + "%")
     end
 end
 
