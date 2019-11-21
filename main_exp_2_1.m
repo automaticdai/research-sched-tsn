@@ -7,7 +7,7 @@ addpath('plants')
 addpath('data')
 addpath('rta')
 
-javaaddpath(strcat(pwd(),'\rta\rta.jar'));
+javaaddpath(strcat(pwd(),'/rta/rta.jar'));
 rta = analysis.RTA;
 
 %% Define Parameters
