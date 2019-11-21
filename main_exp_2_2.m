@@ -2,6 +2,11 @@
 
 clear; clc;
 
+addpath('tasksets')
+addpath('plants')
+addpath('data')
+addpath('rta')
+
 global Ts
 global U_MAX
 global p
@@ -12,7 +17,7 @@ syss_param = [0.01,0.1,0.01,1,0.5;
               0.10,0.2,0.01,1,0.55;
               0.15,0.3,0.01,1,0.6];
 
-sys_idx = 1;
+sys_idx = 3;
 p = dc_motor(syss_param(sys_idx,:)); % dynamics
 Ts = 0.001;   % sampling time
 U_MAX = 12; % input constraint
