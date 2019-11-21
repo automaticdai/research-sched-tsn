@@ -7,8 +7,9 @@ addpath('plants')
 addpath('data')
 addpath('rta')
 
-javaaddpath(strcat(pwd(),'/rta/rta.jar'));
-rta = analysis.RTA;
+spmd
+    javaaddpath(strcat(pwd(),'/rta/rta.jar'));
+end
 
 %% Define Parameters
 % scheduling system
@@ -28,7 +29,7 @@ search_numel = numel(search_space);
 taskset_nc = taskset_gen(N, U_bar);
 candidate_solutions = zeros(search_numel,search_numel,search_numel);
 
-for i = 1:search_numel
+parfor i = 1:search_numel
     for j = 1:search_numel
         for k = 1:search_numel
             % add control packets 
@@ -49,6 +50,7 @@ for i = 1:search_numel
             taskset(:,4) = Pi;
 
             % test schedulability
+            rta = analysis.RTA;
             bSched = rta.schedulabilityTest(taskset);
 
             % if scheduable, add as a candidate solution
