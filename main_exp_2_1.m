@@ -1,70 +1,55 @@
+% Find candidate solution space by exhausive search
+
 clear; clc;
+
+rta = analysis.RTA;
 
 %% Define Parameters
 % scheduling system
 N = 10;         % number of packets
-U_bar = 0.2;    % desired utilization
+U_bar = 0.5;    % desired utilization
 
-%taskset = taskset_gen(N, U_bar);
-%bSched = rta.schedulabilityTest(taskset);
+N_c = 3;        % number of control packets
 
-% control system
-x0 = [10; 0];
-
-p = dc_motor(0.01,0.1,0.01,1,0.5);
-A = p.A;
-B = p.B;
-C = p.C;
-D = p.D;
-
-K = [0.25 0.21];
-Ns = 1000;
-dt = 0.001;
-Ts = 0.001;
-
-Acl = A + B * K;
-pcl = ss(Acl,B,C,D);
+search_range = [1 100] * 1000;
+search_step = 1000;
+search_space = search_range(1):search_step:search_range(2);
+search_numel = numel(search_space);
 
 
-%% check closed-loop stability
-eig(Acl)
-if (max(abs(eig(Acl))) >= 1)
-    disp("Unstable system!")
+%% this is one experiment
+% generate a taskset
+taskset_nc = taskset_gen(N, U_bar);
+candidate_solution_space = [];
+
+for i = 1:search_numel
+    disp(i / search_numel * 100)
+    for j = 1:search_numel
+        for k = 1:search_numel
+            % add control packets 
+            Ti = search_space(i);
+            taskset_c1 = [120, Ti, Ti, -1, 2];
+            
+            Tj = search_space(j);
+            taskset_c2 = [120, Tj, Tj, -1, 2];           
+            
+            Tk = search_space(k);
+            taskset_c3 = [120, Tk, Tk, -1, 2];
+            
+            taskset = [taskset_nc; taskset_c1; taskset_c2; taskset_c3];
+
+            % reorder priorities by deadlines
+            taskset = sortrows(taskset, 3, 'ascend');
+            Pi = (N-1+N_c:-1:0)';
+            taskset(:,4) = Pi;
+
+            % test schedulability
+            bSched = rta.schedulabilityTest(taskset);
+
+            % if scheduable, add as a candidate solution
+            if bSched
+                candidate_solution_space = [candidate_solution_space; Ti, Tj, Tk];
+            end
+        end
+    end
 end
-
-
-%% Run LTI simulation
-[t, x, u] = ltisim(x0, A, B, K, Ns, dt);
-
-
-% pd = c2d(p, Ts);
-%
-% Ad = pd.A;
-% Bd = pd.B;
-% Cd = pd.C;
-% Dd = pd.D;
-
-
-%%
-% plot states
-subplot(2,1,1);
-for i = 1:size(x,2)
-    stairs(t, x(:,i));
-    hold on;
-end
-ylabel("States: x_k")
-xlabel("t")
-
-% plot inputs
-subplot(2,1,2);
-for i = 1:size(u,2)
-    stairs(t, u(:,i));
-    hold on;
-end
-ylabel("Intpus: u_k")
-xlabel("t")
-
-
-
-%% Save results
-%save()
