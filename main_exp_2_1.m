@@ -2,6 +2,11 @@
 
 clear; clc;
 
+addpath('.\tasksets')
+addpath('.\plants')
+addpath('.\data')
+
+javaaddpath('.\rta\');
 rta = analysis.RTA;
 
 %% Define Parameters
@@ -23,7 +28,7 @@ taskset_nc = taskset_gen(N, U_bar);
 candidate_solution_space = [];
 
 for i = 1:search_numel
-    disp(i / search_numel * 100)
+    disp("Progress:" + i / search_numel * 100 + "%")
     for j = 1:search_numel
         for k = 1:search_numel
             % add control packets 
