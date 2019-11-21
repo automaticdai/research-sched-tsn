@@ -5,7 +5,6 @@ function tss = dcdesigner(poles)
 % [0 - 1]
 %poles = [-2+3.1622i   -2-3.1622i];
 
-
 %% System Model
 num = 1;
 den = [1 0.05 10];
