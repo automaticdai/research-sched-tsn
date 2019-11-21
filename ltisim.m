@@ -1,4 +1,4 @@
-function [t, x, u] = ltisim(x0, A, B, K, Ns, dt)
+function [t, x, u] = ltisim(x0, A, B, K, Ns, dt, Ts)
 % LTISIM_D:
 % Simulate the evolution of a linear time-invariate discrete-time system
 %
@@ -25,6 +25,9 @@ t = zeros(Ns, 1);
 x = zeros(Ns, num_of_states);
 u = zeros(Ns, num_of_inputs);
 
+u_timer = Ts;
+u_sampled_x = x0;
+
 % i = 1
 t(1) = 0;
 x(1,:) = x0;
@@ -34,7 +37,15 @@ u(1,:) = K * x0;
 for i = 2:Ns
     t(i) = t(i - 1) + dt;
     x(i,:) = (A * x(i-1,:)' + B * u(i-1)) .* dt + x(i-1,:)';
-    u(i) = K * x(i,:)';
+    % update control output every Ts
+    if u_timer > Ts
+        u(i) = K * u_sampled_x;
+        u_timer = 0;
+        u_sampled_x = x(i,:)';
+    else
+        u(i) = u(i-1);
+    end
+    u_timer = u_timer + dt;
 end
 
 end
