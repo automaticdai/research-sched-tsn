@@ -59,3 +59,5 @@ for i = 1:search_numel
         end
     end
 end
+
+save("result.mat","candidate_solutions")
