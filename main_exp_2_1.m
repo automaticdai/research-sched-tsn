@@ -19,17 +19,23 @@ N = 10;                           % number of packets
 U_bar = [0.5 0.6 0.7 0.8 0.9];    % desired utilization
 
 N_c = 3;                          % number of control packets
+C_i = 120;                        % C_i of control packets
 
 search_range = [1 100] * 1000;
 search_step = 1000;
-search_space = search_range(1):search_step:search_range(2);
+%search_space = search_range(1):search_step:search_range(2);
+
+search_space = [0.5, 1, 2, 5, 10, 20, 50, 100, 200] * 10^3;
+
 search_numel = numel(search_space);
 
 
 %% this is one experiment
 % generate a taskset
 
-for kk = 1:1000
+
+
+for kk = 0:999
     U_bar_this = U_bar(mod(kk,5) + 1);
     
     disp([kk U_bar_this])
@@ -43,13 +49,13 @@ for kk = 1:1000
             for k = 1:search_numel 
                 % add control packets 
                 Ti = search_space(i);
-                taskset_c1 = [120, Ti, Ti, -1, 2];
+                taskset_c1 = [C_i, Ti, Ti, -1, ceil(C_i/100)];
 
                 Tj = search_space(j);
-                taskset_c2 = [120, Tj, Tj, -1, 2];           
+                taskset_c2 = [C_i, Tj, Tj, -1, ceil(C_i/100)];           
 
                 Tk = search_space(k);
-                taskset_c3 = [120, Tk, Tk, -1, 2];
+                taskset_c3 = [C_i, Tk, Tk, -1, ceil(C_i/100)];
 
                 taskset = [taskset_nc; taskset_c1; taskset_c2; taskset_c3];
 
