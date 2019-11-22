@@ -8,11 +8,10 @@ addpath('data')
 addpath('rta')
 
 javaaddpath(strcat(pwd(),'/rta/rta.jar'));
-rta = analysis.RTA;
 
-%spmd   
-%javaaddpath(strcat(pwd(),'/rta/rta.jar'));
-%end
+spmd   
+    javaaddpath(strcat(pwd(),'/rta/rta.jar'));
+end
 
 %% Define Parameters
 % scheduling system
@@ -30,7 +29,7 @@ search_numel = numel(search_space);
 %% this is one experiment
 % generate a taskset
 
-for kk = 0:1000
+for kk = 1:1000
     U_bar_this = U_bar(mod(kk,5) + 1);
     
     disp([kk U_bar_this])
@@ -38,7 +37,8 @@ for kk = 0:1000
     taskset_nc = taskset_gen(N, U_bar_this);
     candidate_solutions = zeros(search_numel,search_numel,search_numel);
 
-    for i = 1:search_numel
+    parfor i = 1:search_numel
+        rta = analysis.RTA;
         for j = 1:search_numel
             for k = 1:search_numel 
                 % add control packets 
@@ -72,6 +72,6 @@ for kk = 0:1000
 
     % save file
     filename_str = sprintf('./data/s_%0.2f_%d_%d.mat', U_bar_this, N, ceil(kk / 5 + 0.1));
-    save(filename_str,'candidate_solutions')
+    save(filename_str,'candidate_solutions', 'taskset_nc')
 
 end
