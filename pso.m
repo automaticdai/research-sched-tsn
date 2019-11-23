@@ -15,8 +15,8 @@ function [tss_best, x1_best, x2_best] = pso()
 %% initialization
 swarm_size = 64;                        % number of the swarm particles
 maxIter = 50;                           % maximum number of iterations
-inertia = 1;
-correction_factor = 2.0;
+inertia = 0.5;
+correction_factor = 1.0;
 
 % set the position of the initial swarm
 a = linspace(-10, 1, 8);

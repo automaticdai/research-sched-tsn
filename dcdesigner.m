@@ -71,7 +71,7 @@ end
 pi = stepinfo(x(:,1), t, 0.0, 'SettlingTimeThreshold',0.05);
 tss = pi.SettlingTime;
 
-if (tss > 2.98 || max(abs(u)) > U_MAX || isnan(tss))
+if (tss > (Ns*0.95)*dt || max(abs(u)) > U_MAX || isnan(tss))
     tss = 100;
 end
 
