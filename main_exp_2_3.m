@@ -52,7 +52,7 @@ for u_bar_idx = 1:6
     S_f = [];   % list of feasible solutions
     n_nf = 0;   % # of infeasible solutions
 
-    for kk = 1:1000
+    for kk = 1:2000
         filename_str = sprintf('./data/s_%0.2f_%d_%d.mat', U_bar_this, N, kk);
         load(filename_str)
         S = candidate_solutions;
@@ -123,6 +123,6 @@ xlabel("Network Load")
 ylabel("Control Cost (normalized)")
 
 figure()
-plot(U_bar, n_f_a / 1000 * 100, 'bd-.')
+plot(U_bar, n_f_a / 2000 * 100, 'bd-.')
 xlabel("Network Load")
 ylabel("Schedule Packet Sets (precentage)")
