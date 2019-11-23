@@ -1,7 +1,7 @@
-N = 20;         % number of packets
+N = 10;         % number of packets
 U_bar = 0.9;    % desired utilization
 
-n_All = 1000;   % number of packet sets
+n_All = 10000;  % number of packet sets
 n_P_DM = 0;     % number of schedulable packet sets
 n_Q_DM = 0;
 n_Q_RND = 0;

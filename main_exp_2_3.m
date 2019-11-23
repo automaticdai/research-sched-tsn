@@ -40,6 +40,7 @@ n_f_a = [];
 n_nf_a = [];
 J_avg_a = [];
 J_min_a = [];
+J_max_a = [];
 
 % Open a feasible candidates
 for u_bar_idx = 1:6
@@ -95,6 +96,7 @@ for u_bar_idx = 1:6
     
     J_avg_a = [J_avg_a; J_avg];
     J_min_a = [J_min_a; min(S_f)];
+    J_max_a = [J_max_a; max(S_f)];
     n_f_a = [n_f_a; n_f];
     n_nf_a = [n_nf_a; n_nf];
     S_f_a = [S_f_a; S_f];
@@ -114,7 +116,9 @@ figure()
 plot(U_bar, J_min_a, 'bd-.')
 hold on;
 plot(U_bar, J_avg_a, 'rO-')
-legend(["min" "avg"])
+hold on;
+plot(U_bar, J_max_a, 'k^-')
+legend(["min" "avg" "max"])
 xlabel("Network Load")
 ylabel("Control Cost (normalized)")
 
