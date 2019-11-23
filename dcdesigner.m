@@ -13,7 +13,7 @@ global p
 
 % LTI simulator parameters
 x0 = [1; 0];
-Ns = 3000;
+Ns = 5000;
 dt = 0.001;
 
 
@@ -68,10 +68,10 @@ if b_plot
 end
 
 % Settling_Time
-pi = stepinfo(x(:,1), t, 'SettlingTimeThreshold',0.05);
+pi = stepinfo(x(:,1), t, 0.0, 'SettlingTimeThreshold',0.05);
 tss = pi.SettlingTime;
 
-if (tss > 2.98 && max(abs(u)) > U_MAX)
+if (tss > 2.98 || max(abs(u)) > U_MAX || isnan(tss))
     tss = 100;
 end
 

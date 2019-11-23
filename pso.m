@@ -15,23 +15,24 @@ function [tss_best, x1_best, x2_best] = pso()
 %% initialization
 swarm_size = 64;                        % number of the swarm particles
 maxIter = 50;                           % maximum number of iterations
-inertia = 1.0;
+inertia = 1;
 correction_factor = 2.0;
 
 % set the position of the initial swarm
-a = 0:7;
-b = 0:7;
+a = linspace(-10, 1, 8);
+b = linspace(1, 10, 8);
 [X,Y] = meshgrid(a,b);
 C = cat(2, X', Y');
 D = reshape(C,[],2);
 swarm(1:swarm_size,1,1:2) = D;          % set the position of the particles in 2D
+
 swarm(:,2,:) = 0;                       % set initial velocity for particles
 swarm(:,4,1) = 1000;                    % set the best value so far
 b_plot = 1;                             % set to zero if you do not need a final plot
 
 
 %% The main loop of PSO
-%tic;
+tic;
 
 for iter = 1:maxIter
     swarm(:, 1, 1) = swarm(:, 1, 1) + swarm(:, 2, 1)/1.3;       % update x position with the velocity
@@ -71,6 +72,6 @@ for iter = 1:maxIter
     disp(['iteration: ' num2str(iter) ', best: ' num2str(tss_best)]);
 end
 
-%toc
+toc
 
 end
