@@ -113,16 +113,16 @@ xlabel("Network Load")
 ylabel("Control Cost (normalized)")
 
 figure()
-plot(U_bar, J_min_a, 'bd-.')
+plot(U_bar, J_min_a, 'bd-.', 'LineWidth', 1.5)
 hold on;
-plot(U_bar, J_avg_a, 'rO-')
+plot(U_bar, J_avg_a, 'rO-', 'LineWidth', 1.5)
 hold on;
-plot(U_bar, J_max_a, 'k^-')
+plot(U_bar, J_max_a, 'k^-', 'LineWidth', 1.5)
 legend(["min" "avg" "max"])
 xlabel("Network Load")
 ylabel("Control Cost (normalized)")
 
 figure()
-plot(U_bar, n_f_a / 2000 * 100, 'bd-.')
+plot(U_bar, n_f_a / 2000 * 100, 'bd-.','LineWidth', 1.5)
 xlabel("Network Load")
 ylabel("Schedule Packet Sets (precentage)")
