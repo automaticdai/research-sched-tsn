@@ -1,6 +1,6 @@
-# Network and Scheduling Co-Design for TSN
+# Network Scheduling and Controller Co-Design for TSN
 
-MATLAB code for the research 'Network and Control Co-Scheduling for IEEE Time-Sensitive Networking.'
+This repository contains the MATLAB code for the research 'Fixed-Priority Scheduling and Controller Co-Designfor Time-Sensitive Networks' for ICCAD'2020.
 
 
 
