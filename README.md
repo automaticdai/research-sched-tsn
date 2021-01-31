@@ -28,3 +28,15 @@ This repository contains the MATLAB code for the research 'Fixed-Priority Schedu
 
 - The RTA implementation current support MTU but only with constrained deadlines.
 - For RTA, the call & run time from MATLAB will be longer with larger hyper periods.
+
+## Citation
+
+```text
+@inproceedings{dai2020fixed,
+  title={Fixed-priority scheduling and controller co-design for time-sensitive networks},
+  author={Dai, Xiaotian and Zhao, Shuai and Jiang, Yu and Jiao, Xun and Hu, Xiaobo Sharon and Chang, Wanli},
+  booktitle={Proceedings of the 39th International Conference on Computer-Aided Design},
+  pages={1--9},
+  year={2020}
+}
+```
