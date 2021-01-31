@@ -1,4 +1,4 @@
-# Network Scheduling and Controller Co-Design for TSN
+# Fixed Priority Scheduling and Controller Co-Design for TSN
 
 This repository contains the MATLAB code for the research 'Fixed-Priority Scheduling and Controller Co-Design for Time-Sensitive Networks' for ICCAD'2020.
 
